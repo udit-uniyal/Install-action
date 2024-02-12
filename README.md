@@ -80,7 +80,7 @@ jobs:
         uses: actions/checkout@main  
      
       - name: Run AccuKnox CSPM Scan
-        uses: udit-uniyal/Install-action@v2
+        uses: udit-uniyal/Install-action@v1
         with:
           cspm_url: 
           cspm_token: 
