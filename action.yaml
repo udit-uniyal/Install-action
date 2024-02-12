@@ -22,7 +22,7 @@ inputs:
      description: 'Add version tag to the repository'
      required: true
   severity:
-     description: "Select Severity from UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL if you want to scan for specific severity"
+     description: "Allows selection of severity level for the scan. Options include UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL. If specified, the scan will target vulnerabilities of the selected severity level."
      required: false
   
 
