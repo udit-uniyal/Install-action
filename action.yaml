@@ -56,3 +56,8 @@ runs:
       run: |
         curl --location --request POST "https://${{ inputs.cspm_url }}/api/v1/artifact/?tenant_id=${{ inputs.tenant_id }}&data_type=TR&save_to_s3=false" --header "Authorization: Bearer ${{ inputs.cspm_token }}" --form "file=@\"./results.json\""
       shell: bash
+
+branding:
+  icon: 'shield'
+  color: 'green'
+
