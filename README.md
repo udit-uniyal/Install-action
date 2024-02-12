@@ -37,15 +37,16 @@ inputs:
 
 ## Usage
 
-Steps for using install-action in a workflow yaml file 
+Steps for using Install-action in a workflow yaml file 
 - Checkout into the repo using checkout action.
-- Using vulnerability-scanner action install vulnerability scanner and run scan.
+- Utilize the udit-uniyal/Install-action repository with version tag v1.
   
-### User Input's sample in workflow
+
+### workflow steps:
 
 ```yaml
  - name: Run AccuKnox CSPM Scan
-        uses: ./
+        uses: udit-uniyal/Install-action@v1
         with:
           cspm_url: 
           cspm_token: 
