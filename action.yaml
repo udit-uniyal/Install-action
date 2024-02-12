@@ -1,0 +1,58 @@
+name: AccuKnox Vulnerability Scan
+description: Scan Docker images using AccuKnox and push the results to the CSPM panel.
+
+inputs:
+  dockerfile_context:
+    description: 'The context of the Dockerfile to use for building the image.'
+    required: true
+    default: 'Dockerfile'
+  cspm_url:
+    description: 'The URL of the CSPM panel to push the scan results to.'
+    required: true
+  cspm_token:
+    description: 'The token for authenticating with the CSPM panel.'
+    required: true
+  tenant_id:
+    description: 'The ID of the tenant associated with the CSPM panel.'
+    required: true
+  repository_name: 
+     description: 'Docker image repository name'
+     required: true
+  tag:
+     description: 'Add version tag to the repository'
+     required: true
+  severity:
+     description: "Select Severity from UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL if you want to scan for specific severity"
+     required: false
+  
+
+runs:
+  using: 'composite'
+  steps: 
+    - name: Docker Build
+      run: |
+        docker build -t ${{ inputs.repository_name }}:${{ inputs.tag }} -f ${{ inputs.DOCKERFILE_CONTEXT }} .
+      shell: bash
+      
+    - name: Download Vulnerability Scanner
+      run: |
+        curl -sfL $url | sh -s -- -b /usr/local/bin > /dev/null
+      env: 
+        url: https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh
+      shell: bash
+      
+    - name: Run AccuKnox Vulnerability Scanner
+      run: |
+        $Scan image --exit-code 0 --severity HIGH -f json ${{ inputs.repository_name }}:${{ inputs.tag }}  -o results.json --quiet 
+      env:   
+        Scan: trivy
+      shell: bash
+      
+    - name: Print AccuKnox Results
+      run: cat results.json
+      shell: bash
+      
+    - name: Push report to CSPM panel
+      run: |
+        curl --location --request POST "https://${{ inputs.cspm_url }}/api/v1/artifact/?tenant_id=${{ inputs.tenant_id }}&data_type=TR&save_to_s3=false" --header "Authorization: Bearer ${{ inputs.cspm_token }}" --form "file=@\"./results.json\""
+      shell: bash
