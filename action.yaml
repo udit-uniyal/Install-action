@@ -21,6 +21,7 @@ inputs:
   tag:
      description: 'Add version tag to the repository'
      required: true
+     default: ${{ github.run_id }}
   severity:
      description: "Allows selection of severity level for the scan. Options include UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL. If specified, the scan will target vulnerabilities of the selected severity level."
      required: false
