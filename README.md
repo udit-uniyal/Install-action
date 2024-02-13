@@ -19,7 +19,7 @@ inputs:
     required: true
     default: 'cspm.demo.accuknox.com'
   token:
-    description: 'The token for authenticating with the AccuKnox SaaS.'
+    description: 'The token for authenticating with the CSPM Panel.'
     required: true
   tenant_id:
     description: 'The ID of the tenant associated with the AccuKnox SaaS.'
