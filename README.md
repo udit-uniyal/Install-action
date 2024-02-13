@@ -19,10 +19,10 @@ inputs:
     required: true
     default: 'cspm.demo.accuknox.com'
   token:
-    description: 'The token for authenticating with the CSPM Panel.'
+    description: 'The token for authenticating with the CSPM panel.'
     required: true
   tenant_id:
-    description: 'The ID of the tenant associated with the AccuKnox SaaS.'
+    description: 'The ID of the tenant associated with the CSPM panel.'
     required: true
   repository_name: 
      description: 'Docker image repository name'
@@ -35,6 +35,10 @@ inputs:
      description: "Allows selection of severity level for the scan. Options include UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL. If specified, the scan will target vulnerabilities of the selected severity level."
      required: false
      default: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+  code:
+     description: "Values '0' and '1' are accepted. '0' is the default value, which indicates that the pipeline will not be halted if the specified severity is found, while '1' indicates that the pipeline will stop if a specified severity level is detected." 
+     required: false
+     default: '0'
 ```
 
 ## Usage
