@@ -27,7 +27,10 @@ inputs:
      description: "Allows selection of severity level for the scan. Options include UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL. If specified, the scan will target vulnerabilities of the selected severity level."
      required: false
      default: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
-  
+  code:
+     description: "Values '0' and '1' are accepted. '0' is the default value, which indicates that the pipeline will not be halted if the specified severity is found, while '1' indicates that the pipeline will stop if a specified severity level is detected." 
+     required: false
+     default: '0'
 
 runs:
   using: 'composite'
@@ -46,7 +49,7 @@ runs:
       
     - name: Run AccuKnox Vulnerability Scanner
       run: |
-        $Scan image --exit-code 0 --severity ${{ inputs.severity }} -f json ${{ inputs.repository_name }}:${{ inputs.tag }}  -o results.json --quiet 
+        $Scan image --exit-code ${{ inputs.severity }} --severity ${{ inputs.severity }} -f json ${{ inputs.repository_name }}:${{ inputs.tag }}  -o results.json --quiet 
       env:   
         Scan: trivy
       shell: bash
