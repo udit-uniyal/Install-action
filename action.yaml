@@ -6,10 +6,11 @@ inputs:
     description: 'The context of the Dockerfile to use for building the image.'
     required: true
     default: 'Dockerfile'
-  cspm_url:
+  endpoint:
     description: 'The URL of the CSPM panel to push the scan results to.'
     required: true
-  cspm_token:
+    default: 'cspm.demo.accuknox.com'
+  token:
     description: 'The token for authenticating with the CSPM panel.'
     required: true
   tenant_id:
@@ -21,7 +22,7 @@ inputs:
   tag:
      description: 'Add version tag to the repository'
      required: true
-     default: ${{ github.run_id }}
+     default: '${{ github.run_id }}'
   severity:
      description: "Allows selection of severity level for the scan. Options include UNKNOWN, LOW, MEDIUM, HIGH, CRITICAL. If specified, the scan will target vulnerabilities of the selected severity level."
      required: false
@@ -55,7 +56,7 @@ runs:
       
     - name: Push report to CSPM panel
       run: |
-        curl --location --request POST "https://${{ inputs.cspm_url }}/api/v1/artifact/?tenant_id=${{ inputs.tenant_id }}&data_type=TR&save_to_s3=false" --header "Authorization: Bearer ${{ inputs.cspm_token }}" --form "file=@\"./results.json\""
+        curl --location --request POST "https://${{ inputs.endpoint }}/api/v1/artifact/?tenant_id=${{ inputs.tenant_id }}&data_type=TR&save_to_s3=false" --header "Authorization: Bearer ${{ inputs.token }}" --form "file=@\"./results.json\""
       shell: bash
 
 branding:
